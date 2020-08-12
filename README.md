@@ -4,7 +4,8 @@
 
 ### Schema
 
-``` User Schema
+``` 
+User Schema
 - email address
 - password
 - Grids
