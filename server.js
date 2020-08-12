@@ -8,7 +8,7 @@ const cors = require('cors')
 const app = express()
 
 const port = 3001
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 
 app.use(bodyParser.json())
 app.use(logger("dev"))
@@ -16,16 +16,12 @@ app.use(cors())
 
 app.use("/", routes)
 
-mongoose.connect(
-  "mongodb://localhost/xeffect",
-  { useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-)
-
-app.get("/", (req, res) => {
-  res.send("Hello World!")
-})
+// mongoose.connect(
+//   "mongodb://localhost/xeffect",
+//   { useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   }
+// )
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
