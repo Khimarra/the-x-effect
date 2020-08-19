@@ -62,3 +62,35 @@ app.use("/", router)
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`)
 })
+
+let data = [
+  {
+    email: "henry@henry.com",
+  },
+  {
+    email: "george@george.com",
+  },
+  {
+    email: "bobby@bobby.com",
+  },
+]
+
+router.route('/insertdata').post(function (req, res) {
+  users.insertMany(data, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+router.route('/fetchdata').get(function (req, res) {
+  users.find({}, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
