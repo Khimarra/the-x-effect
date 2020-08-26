@@ -1,38 +1,50 @@
-// const mongoose = require("mongoose")
+const mongoose = require("mongoose")
+const users = require("../model")
 
-// const uri = "mongodb://localhost/xeffect"
+let data = [
+  {
+    email: "henry@henry.com",
+  },
+  {
+    email: "george@george.com",
+  },
+  {
+    email: "bobby@bobby.com",
+  },
+]
 
-// mongoose.connect(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
+function insertData (req, res) {
+  users.insertMany(data, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
 
-// const connection = mongoose.connection
+function getUsers (req, res) {
+  users.find({}, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
 
-// connection.on('error', console.error.bind(console, 'connectionerror:'))
-// connection.once('once', function () {
-//   console.log("MongoDB database connection established successfully")
-//   // const xeffectSchema = new mongoose.Schema({
-//   //   email: string
+function getUserById(req, res) {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
 
-//   // })
-//   // const User = mongoose.model('User', xeffectSchema)
-//   // const henry = new User({ email: 'henry@henry.com' })
-//   // console.log(henry.email)
-// })
-
-// const getInfo = async (req, res) => {
-//   const thing = db.collection('stuff').find()
-//   return res.send(thing)
-//   // console.log(thing)
-//   // try {
-//   //   const tickets = await Ticket.findAll()
-//   //   return res.status(200).json({ tickets })
-//   // } catch (error) {
-//   //   return res.status(500).send(error.message)
-//   // }
-// }
-
-// module.exports = { 
-//   getInfo
-// }
+module.exports = { 
+  insertData,
+  getUsers,
+  getUserById
+}
