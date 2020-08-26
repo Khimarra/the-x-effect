@@ -2,7 +2,44 @@ const mongoose = require("mongoose")
 
 const Schema = mongoose.Schema
 
-let user = new Schema(
+const daySchema = new Schema(
+  {
+    success: {
+      type: Boolean,
+    },
+    notes: {
+      type: String,
+    },
+  },
+  { collection: "Days" }
+)
+
+const cardSchema = new Schema(
+  {
+    title: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
+    successFill: {
+      type: String,
+    },
+    missedFill: {
+      type: String,
+    },
+    days: [daySchema],
+  },
+  { collection: "Cards" }
+)
+
+const userSchema = new Schema(
   {
     email: {
       type: String,
@@ -21,40 +58,14 @@ let user = new Schema(
         type: Number,
       },
     },
-    cards: [
-      {
-        title: {
-          type: String,
-        },
-        description: {
-          type: String,
-        },
-        startDate: {
-          type: Date,
-        },
-        endDate: {
-          type: Date,
-        },
-        successFill: {
-          type: String,
-        },
-        missedFill: {
-          type: String,
-        },
-        days: [
-          {
-            success: {
-              type: Boolean,
-            },
-            notes: {
-              type: String,
-            },
-          },
-        ],
-      },
-    ],
+    cards: [cardSchema],
   },
   { collection: "Users" }
 )
 
-module.exports = mongoose.model("users", user)
+module.exports = {
+  users: mongoose.model("users", userSchema),
+  cards: mongoose.model("cards", cardSchema),
+  days: mongoose.model("days", daySchema)
+}
+

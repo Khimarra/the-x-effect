@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const users = require("../model")
+const { users, cards, days } = require("../model")
 
 let data = [
   {
@@ -161,22 +161,12 @@ function updateUser(req, res) {
 
 function updateCard(req, res) {
   console.log("updatecard")
-  users.findById(req.params.card_id, function (err, doc) {
-    //update the proper subdocument
-    doc.cards.array[0][0] = req.body
-    //then mark it as modified and save it
-    doc.markModified("brackets.rounds")
-    //save the model
-    doc.save(
-      // users.findByIdAndUpdate(req.params.card_id, req.body, function (err, result) {
-      function (err, result) {
-        if (err) {
-          res.send(err)
-        } else {
-          res.send(result)
-        }
-      }
-    )
+  cards.findByIdAndUpdate(req.params.card_id, req.body, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
   })
 }
 
