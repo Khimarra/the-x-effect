@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
-const { insertData, getUsers, getUserById } = require('../controllers')
+const { insertData, getUsers, getUserById, getCards, getCardById } = require('../controllers')
 
 router.get('/', function (req, res) {
   res.send('I Am gRoot')
@@ -21,9 +21,9 @@ router.route("/users/:id").get(getUserById)
 
 // router.route("/users").post()
 
-// router.route("/cards").get()
+router.route("/users/:id/cards").get(getCards)
 
-// router.route("/cards/:id").get()
+router.route("/users/:id/cards/:card_id").get(getCardById)
 
 // router.route("/cards").post()
 

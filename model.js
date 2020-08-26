@@ -6,7 +6,14 @@ let user = new Schema(
   {
     email: {
       type: String
-    }
+    },
+    cards: [
+      {
+        title: {
+          type: String
+        }
+      }
+    ]
   },
   { collection: "Users" }
 )

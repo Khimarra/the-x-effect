@@ -10,6 +10,9 @@ let data = [
   },
   {
     email: "bobby@bobby.com",
+    cards: [
+      {title: "bobby's card"}
+    ]
   },
 ]
 
@@ -43,8 +46,30 @@ function getUserById(req, res) {
   })
 }
 
+function getCards(req, res) {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result.cards)
+    }
+  })
+}
+
+function getCardById(req, res) {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
+
 module.exports = { 
   insertData,
   getUsers,
-  getUserById
+  getUserById,
+  getCards,
+  getCardById
 }
