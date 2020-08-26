@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
-const { insertData, getUsers, getUserById, getCards, getCardById } = require('../controllers')
+const { insertData, getUsers, getUserById, getCards, getCardById, getDayById } = require('../controllers')
 
 router.get('/', function (req, res) {
   res.send('I Am gRoot')
@@ -32,6 +32,8 @@ router.route("/users/:id/cards/:card_id").get(getCardById)
 // router.route("/cards/:id").delete()
 
 // router.route("/profile").put()
+
+router.route("/users/:id/cards/:card_id/days/:day_id").get(getDayById)
 
 // router.route("/cards/:id/days/:day_id").put()
 

@@ -37,7 +37,7 @@ Using Express and MongoDB because Mongo databases are so easily scalable and thi
 User Schema
 - email address
 - password
-- Grids
+- Cards
     - Title
     - Description
     - Start Date
