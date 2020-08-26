@@ -139,6 +139,47 @@ function getDayById(req, res) {
   })
 }
 
+function deleteMany(req, res) {
+  users.deleteMany({}, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
+
+function updateUser(req, res) {
+  users.findByIdAndUpdate(req.params.id, req.body, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(result)
+    }
+  })
+}
+
+function updateCard(req, res) {
+  console.log("updatecard")
+  users.findById(req.params.card_id, function (err, doc) {
+    //update the proper subdocument
+    doc.cards.array[0][0] = req.body
+    //then mark it as modified and save it
+    doc.markModified("brackets.rounds")
+    //save the model
+    doc.save(
+      // users.findByIdAndUpdate(req.params.card_id, req.body, function (err, result) {
+      function (err, result) {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(result)
+        }
+      }
+    )
+  })
+}
+
 module.exports = {
   insertData,
   getUsers,
@@ -146,4 +187,7 @@ module.exports = {
   getCards,
   getCardById,
   getDayById,
+  deleteMany,
+  updateUser,
+  updateCard
 }
