@@ -10,7 +10,8 @@ const {
   deleteMany, 
   updateUser,
   updateCard,
-  updateDay
+  updateDay,
+  createUser
 } = require('../controllers')
 
 router.get('/', function (req, res) {
@@ -32,7 +33,7 @@ router.route("/users/:id").put(updateUser)
 // User routes:
 // router.route("/profile").get()
 
-// router.route("/users").post()
+router.route("/users").post(createUser)
 
 router.route("/users/:id/cards").get(getCards)
 

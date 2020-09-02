@@ -166,7 +166,7 @@ let updateCard = async (req, res) => {
     } else {
       const card = result.cards.id(req.params.card_id)
       let days = card.days
-      card.overwrite({ ...card, ...req.body })
+      card.overwrite({ ...req.body })
       card.days = days
       result.save()
       res.send(card)
@@ -188,6 +188,17 @@ let updateDay = async (req, res) => {
   })
 }
 
+let createUser = (req, res) => {
+  let newUser = new users({ ...req.body })
+  newUser.save(function (err) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(newUser)
+    }
+  })
+}
+
 module.exports = {
   insertData,
   getUsers,
@@ -198,5 +209,6 @@ module.exports = {
   deleteMany,
   updateUser,
   updateCard,
-  updateDay
+  updateDay,
+  createUser
 }
