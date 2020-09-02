@@ -11,7 +11,9 @@ const {
   updateUser,
   updateCard,
   updateDay,
-  createUser
+  createUser,
+  createCard,
+  deleteCard
 } = require('../controllers')
 
 router.get('/', function (req, res) {
@@ -39,11 +41,11 @@ router.route("/users/:id/cards").get(getCards)
 
 router.route("/users/:id/cards/:card_id").get(getCardById)
 
-// router.route("/cards").post()
+router.route("/users/:id/cards").post(createCard)
 
 router.route("/users/:id/cards/:card_id").put(updateCard)
 
-// router.route("/cards/:id").delete()
+router.route("/users/:id/cards/:card_id").delete(deleteCard)
 
 // router.route("/profile").put()
 

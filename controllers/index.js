@@ -199,6 +199,37 @@ let createUser = (req, res) => {
   })
 }
 
+let createCard = (req, res) => {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      let newCard = new cards({ ...req.body })
+      let startDate = new Date(req.body.startDate)
+      let endDate = new Date(req.body.endDate)
+      let dayCount = (endDate - startDate) / (1000 * 60 * 60 * 24)
+      for (let i = 0; i < dayCount; i++) {
+        newCard.days.push({success: false, notes: ""})
+      }
+      result.cards.push(newCard)
+      result.save()
+      res.send(newCard)
+    }
+  })
+}
+
+let deleteCard = (req, res) => {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      result.cards.id(req.params.card_id).remove()
+      result.save()
+      res.send(result)
+    }
+  })
+}
+
 module.exports = {
   insertData,
   getUsers,
@@ -210,5 +241,7 @@ module.exports = {
   updateUser,
   updateCard,
   updateDay,
-  createUser
+  createUser,
+  createCard,
+  deleteCard
 }
