@@ -160,48 +160,32 @@ function updateUser(req, res) {
 }
 
 let updateCard = async (req, res) => {
-  console.log("updatecard")
-  // cards.findByIdAndUpdate(req.params.card_id, req.body, function (err, result) {
-  console.log(req.params.card_id)
-  // cards.findById(req.params.card_id, function (err, doc) {
-  //     console.log(doc)
-  //     if (err) {
-  //       console.log("update card error")
-  //       res.send(err)
-  //     } else {
-  //       console.log("card updated")
-  //       card.overwrite(req.body)
-  //       card.save()
-  //       // card.save(res.send(card))
-  //       res.send(doc)
-  //     }
-  //   })
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      const card = result.cards.id(req.params.card_id)
+      let days = card.days
+      card.overwrite({ ...card, ...req.body })
+      card.days = days
+      result.save()
+      res.send(card)
+    }
+  })
+}
 
-    users.findOne({ _id: req.params.id }, function (err, result) {
-      if (err) {
-        res.send(err)
-      } else {
-        const card = result.cards.id(req.params.card_id)
-        console.log(card)
-        console.log("new log", req.body)
-        let days = card.days
-        console.log("days", days)
-        card.overwrite({ ...card, ...req.body })
-        card.days = days
-        result.save()
-        res.send(card)
-
-      }
-    })
-
-  // let user = users.findOne({ _id: req.params.id })
-  // console.log("user", user)
-  // const card = user.cards.id(req.params.card_id)
-  // console.log(card)
-  // card.overwrite({ title: "blah" })
-  // console.log(card)
-  // user.save()
-  // res.send(card)
+let updateDay = async (req, res) => {
+  users.findOne({ _id: req.params.id }, function (err, result) {
+    if (err) {
+      res.send(err)
+    } else {
+      const card = result.cards.id(req.params.card_id)
+      let day = card.days.id(req.params.day_id)
+      day.overwrite({ ...req.body })
+      result.save()
+      res.send(day)
+    }
+  })
 }
 
 module.exports = {
@@ -213,8 +197,6 @@ module.exports = {
   getDayById,
   deleteMany,
   updateUser,
-  updateCard
+  updateCard,
+  updateDay
 }
-
-// 5f46e1f2f2bce7016cc7e68e
-// 5f46e1f2f2bce7016cc7e68e

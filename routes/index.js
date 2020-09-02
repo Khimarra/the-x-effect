@@ -9,7 +9,8 @@ const {
   getDayById, 
   deleteMany, 
   updateUser,
-  updateCard
+  updateCard,
+  updateDay
 } = require('../controllers')
 
 router.get('/', function (req, res) {
@@ -47,7 +48,7 @@ router.route("/users/:id/cards/:card_id").put(updateCard)
 
 router.route("/users/:id/cards/:card_id/days/:day_id").get(getDayById)
 
-// router.route("/cards/:id/days/:day_id").put()
+router.route("/users/:id/cards/:card_id/days/:day_id").put(updateDay)
 
 router.route("/insertdata").post(insertData)
 
