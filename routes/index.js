@@ -23,6 +23,8 @@ router.route("/users/:id").get(getUserById)
 
 router.route("/users/:id").put(updateUser)
 
+// router.route("/cards").get(getCards)
+
 // router.route("/users/:id").delete()
 
 
@@ -37,7 +39,7 @@ router.route("/users/:id/cards/:card_id").get(getCardById)
 
 // router.route("/cards").post()
 
-router.route("/cards/:card_id").put(updateCard)
+router.route("/users/:id/cards/:card_id").put(updateCard)
 
 // router.route("/cards/:id").delete()
 
