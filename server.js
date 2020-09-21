@@ -32,7 +32,7 @@ connection.once("open", function () {
 
 app.use("/", routes)
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log(`Connection successful!`)
 })
 
