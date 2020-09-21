@@ -4,8 +4,12 @@ const logger = require('morgan')
 const routes = require('./routes')
 const cors = require('cors')
 const mongoose = require("mongoose")
+require('dotenv').config()
 
-const uri = "mongodb://localhost/xeffect"
+// const uri = "mongodb://localhost/xeffect"
+
+const uri = `mongodb+srv://${process.env.username}:${process.env.pwd}@voidcluster.5czay.mongodb.net/xeffect?retryWrites=true&w=majority`
+
 
 const app = express()
 
@@ -29,6 +33,6 @@ connection.once("open", function () {
 app.use("/", routes)
 
 app.listen(port, () => {
-  console.log(`Server is listening at http://localhost:${port}`)
+  console.log(`Connection successful!`)
 })
 
