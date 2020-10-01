@@ -1,4 +1,7 @@
 const { Router } = require('express')
+const passport = require('passport')
+const jwt = require('jsonwebtoken')
+
 const router = Router()
 const {
   insertData,
@@ -16,6 +19,8 @@ const {
   deleteCard
 } = require('../controllers')
 
+
+
 router.get('/', function (req, res) {
   res.send('I Am gRoot')
 })
@@ -26,6 +31,32 @@ router.route("/users").get(getUsers)
 router.route("/users/:id").get(getUserById)
 
 router.route("/users/:id").put(updateUser)
+
+router.route("/signup").post(
+  passport.authenticate("signup", { session: false }),
+  async (req, res, next) => {
+    res.json({ message: "Signup successful", user: req.user })
+  }
+)
+
+router.route("/login").post(async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const error = new Error("an error occurred")
+        return next(error)
+      }
+      req.login(user, { session: false }, async (error) => {
+        if (error) return next(error)
+        const body = { _id: user._id, email: user.email }
+        const token = jwt.sign({ user: body }, "TOP_SECRET")
+        return res.json({ token })
+      })
+    } catch (error) {
+      return next(error)
+    }
+  })(req, res, next)
+})
 
 // router.route("/cards").get(getCards)
 
