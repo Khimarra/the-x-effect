@@ -1,6 +1,8 @@
 const passport = require ('passport')
+const { users } = require('../model')
 const localStrategy = require('passport-local').Strategy
-const userModel = require('../model')
+const JWTstrategy = require('passport-jwt').Strategy
+const ExtractJWT = require('passport-jwt').ExtractJwt
 
 passport.use(
   "signup",
@@ -8,7 +10,7 @@ passport.use(
     { usernameField: "email", passwordField: "password" },
     async (email, password, done) => {
       try {
-        const user = await userModel.create({ email, password })
+        const user = await users.create({ email, password })
         return done(null, user)
       } catch (error) {
         done(error)
@@ -23,7 +25,7 @@ passport.use(
     { usernameField: "email", passwordField: "password" },
     async (email, password, done) => {
       try {
-        const user = await userModel.findOne({ email })
+        const user = await users.findOne({ email })
         if (!user) {
           return done(null, false, {
             message: "Incorrect username or password",
@@ -42,3 +44,20 @@ passport.use(
     }
   )
 )
+
+passport.use(
+  new JWTstrategy(
+    {
+      secretOrKey: "TOP_SECRET",
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token"),
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user)
+      } catch (error) {
+        done(error)
+      }
+    }
+  )
+)
+
