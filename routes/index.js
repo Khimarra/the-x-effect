@@ -6,12 +6,10 @@ const router = Router()
 const {
   insertData,
   getUsers,
-  getUserById,
   getCards,
   getCardById,
   getDayById,
   deleteMany,
-  updateUser,
   updateCard,
   updateDay,
   createCard,
@@ -23,11 +21,6 @@ router.get("/", function (req, res) {
 })
 
 // Admin/Auth routes:
-
-// make secure, may not need id, just use token
-router.route("/users/:id").get(getUserById)
-// router.route("/profile").get(getProfile)
-router.route("/users/:id").put(updateUser)
 
 // not secure
 router
@@ -60,13 +53,13 @@ router
   // card routes:
   
   // make secure and modify to only ever return user's cards
-  router.route("/users/:id/cards").get(getCards)
-  router.route("/users/:id/cards/:card_id").get(getCardById)
-  router.route("/users/:id/cards").post(createCard)
-  router.route("/users/:id/cards/:card_id").put(updateCard)
-  router.route("/users/:id/cards/:card_id").delete(deleteCard)
-  router.route("/users/:id/cards/:card_id/days/:day_id").get(getDayById)
-  router.route("/users/:id/cards/:card_id/days/:day_id").put(updateDay)
+  // router.route("/users/:id/cards").get(getCards)
+  // router.route("/users/:id/cards/:card_id").get(getCardById)
+  // router.route("/users/:id/cards").post(createCard)
+  // router.route("/users/:id/cards/:card_id").put(updateCard)
+  // router.route("/users/:id/cards/:card_id").delete(deleteCard)
+  // router.route("/users/:id/cards/:card_id/days/:day_id").get(getDayById)
+  // router.route("/users/:id/cards/:card_id/days/:day_id").put(updateDay)
   
   // TEST ROUTES - REMOVE IN FINAL PRODUCTION VERSION
   router.route("/users").get(getUsers)

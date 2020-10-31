@@ -109,36 +109,6 @@ function getUserById(req, res) {
   })
 }
 
-function getCards(req, res) {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      res.send(result.cards)
-    }
-  })
-}
-
-function getCardById(req, res) {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      res.send(result.cards.id(req.params.card_id))
-    }
-  })
-}
-
-function getDayById(req, res) {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      res.send(result.cards.id(req.params.card_id).days.id(req.params.day_id))
-    }
-  })
-}
-
 function deleteMany(req, res) {
   users.deleteMany({}, function (err, result) {
     if (err) {
@@ -149,99 +119,9 @@ function deleteMany(req, res) {
   })
 }
 
-function updateUser(req, res) {
-  users.findByIdAndUpdate(req.params.id, req.body, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      res.send(result)
-    }
-  })
-}
-
-let updateCard = async (req, res) => {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      const card = result.cards.id(req.params.card_id)
-      let days = card.days
-      card.overwrite({ ...req.body })
-      card.days = days
-      result.save()
-      res.send(card)
-    }
-  })
-}
-
-let updateDay = async (req, res) => {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      const card = result.cards.id(req.params.card_id)
-      let day = card.days.id(req.params.day_id)
-      day.overwrite({ ...req.body })
-      result.save()
-      res.send(day)
-    }
-  })
-}
-
-let createUser = (req, res) => {
-  let newUser = new users({ ...req.body })
-  newUser.save(function (err) {
-    if (err) {
-      res.send(err)
-    } else {
-      res.send(newUser)
-    }
-  })
-}
-
-let createCard = (req, res) => {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      let newCard = new cards({ ...req.body })
-      let startDate = new Date(req.body.startDate)
-      let endDate = new Date(req.body.endDate)
-      let dayCount = (endDate - startDate) / (1000 * 60 * 60 * 24)
-      for (let i = 0; i < dayCount; i++) {
-        newCard.days.push({success: false, notes: ""})
-      }
-      result.cards.push(newCard)
-      result.save()
-      res.send(newCard)
-    }
-  })
-}
-
-let deleteCard = (req, res) => {
-  users.findOne({ _id: req.params.id }, function (err, result) {
-    if (err) {
-      res.send(err)
-    } else {
-      result.cards.id(req.params.card_id).remove()
-      result.save()
-      res.send(result)
-    }
-  })
-}
-
 module.exports = {
   insertData,
   getUsers,
   getUserById,
-  getCards,
-  getCardById,
-  getDayById,
-  deleteMany,
-  updateUser,
-  updateCard,
-  updateDay,
-  createUser,
-  createCard,
-  deleteCard
+  deleteMany
 }
