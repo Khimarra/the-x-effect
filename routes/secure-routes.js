@@ -1,12 +1,10 @@
 const express = require("express")
 const router = express.Router()
 
-router.get("/profile", (req, res, next) => {
-  res.json({
-    message: "You made it to the secure route",
-    user: req.user,
-    token: req.query.secret_token,
-  })
-})
+const {
+  getProfile
+} = require("../controllers/secure-controllers")
+
+router.route("/profile").get(getProfile)
 
 module.exports = router

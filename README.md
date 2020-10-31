@@ -136,6 +136,5 @@ User routes:
 
 ## Progress Notes
 
-- Auth is working, but using URL query parameter. Needs to be converted to header so token is not in URL
-- Re-deploy and test
-- Time for frontend!
+- secure backend routes
+- secure frontend routes
