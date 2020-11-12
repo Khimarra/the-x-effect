@@ -27,19 +27,22 @@ passport.use(
       try {
         const user = await users.findOne({ email })
         if (!user) {
+          console.log('no user')
           return done(null, false, {
             message: "Incorrect username or password",
           })
         }
         const validate = await user.isValidPassword(password)
         if (!validate) {
+          console.log('no password')
           return done(null, false, {
             message: "Incorrect username or password",
           })
         }
+        console.log('SUCCESS')
         return done(null, user, { message: "Logged in successfully" })
       } catch (error) {
-        console.log(error)
+        console.log('ERROR:', error)
         return done(error)
       }
     }
