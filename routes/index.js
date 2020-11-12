@@ -35,7 +35,7 @@ router
     passport.authenticate("login", async (err, user, info) => {
       try {
         if (err || !user) {
-          const error = new Error("an error occurred")
+          const error = new Error(err)
           return next(error)
         }
         req.login(user, { session: false }, async (error) => {
