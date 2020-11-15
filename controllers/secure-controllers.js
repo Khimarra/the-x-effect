@@ -101,6 +101,7 @@ let createCard = (req, res) => {
       }
       result.cards.push(newCard)
       result.save()
+      console.log(newCard)
       res.send(newCard)
     }
   })

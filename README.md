@@ -22,6 +22,7 @@ This app is meant to accomplish the same task as the index cards, but with a lit
 1. Responsive design - desktop view
 1. Progress bar
 1. Motivational quote
+1. Ability to make card without account, must sign up to save it
 
 ## Wireframes
 
