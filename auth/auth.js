@@ -25,19 +25,21 @@ passport.use(
     { usernameField: "email", passwordField: "password" },
     async (email, password, done) => {
       try {
-        const user = await users.findOne({ email })
-        if (!user) {
-          return done(null, false, {
-            message: "Incorrect username or password",
-          })
-        }
-        const validate = await user.isValidPassword(password)
-        if (!validate) {
-          return done(null, false, {
-            message: "Incorrect username or password",
-          })
-        }
-        return done(null, user, { message: "Logged in successfully" })
+        await users.findOne({ email }, async (err, user) => {
+          if (err) { return done(err) }
+          if (!user) {
+            return done(null, false, {
+              message: "Incorrect username or password",
+            })
+          }
+          const validate = await user.isValidPassword(password)
+          if (!validate) {
+            return done(null, false, {
+              message: "Incorrect username or password",
+            })
+          }
+          return done(null, user, { message: "Logged in successfully" })
+        })
       } catch (error) {
         return done(error)
       }
